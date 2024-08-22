@@ -3,7 +3,7 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'euvabeco.github.io',
+	site: 'https://euvabeco.github.io',
 	base: 'evc_doc',
 	integrations: [
 		starlight({
