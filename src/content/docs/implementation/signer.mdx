@@ -1,0 +1,75 @@
+---
+title: Signer
+description: The signer is a component of the EVC software suite that allows the EVC to be signed
+---
+import { Badge } from '@astrojs/starlight/components';
+
+**Status:** <Badge text="Draft" variant="caution" size="medium" />
+
+## Introduction
+
+The signer is a component of the EVC software suite that enables the signing and generation of the EVC in a portable format.
+
+This software is developed using the Ruby language and the following libraries:
+- base45
+- openssl
+- cbor
+- falcon
+- rqrcode
+- jwt
+- rack
+
+Each of these libraries is used to perform specific tasks, such as encoding and decoding data, signing data, and generating QR codes.
+
+The signer exposes an API that allows for signing the EVC and generating QR codes. It is designed as **a toolbox** accessible through a JSON-RPC server that provides access to several procedures:
+- sign
+- generate QR code (SVG, PNG)
+- zip data
+- encode data in base45
+- verify the signature
+- etc.
+
+These procedures allow anyone to use the signer to sign and generate a portable version of the EVC in any language with a default implementation.
+This approach allows you to use the default implementation or to customize certain parts.
+For example, you can use the signer to sign the EVC, return it as a base45 string, and generate the QR code on your side.
+
+## APIs
+
+The signer exposes two APIs:
+- A JSON-RPC API
+- A standard API to retrieve the public key
+
+### JSON-RPC API
+All procedures are exposed through the same endpoint: `POST` on `/jsonrpc`. The body of the request must be a JSON-RPC request.
+
+Here is a list of the available procedures:
+- `to_base_45`: Encode data in base45
+- `to_cwt`: Generate an HCERT CWT
+- `to_jwt`: Generate an HCERT JWT
+- `to_zip`: Zip data
+- `to_hcert`: Generate an HCERT (compressed CWT in base45)
+- `to_hcert_qr_code`: Compressed CWT in base45 as a QR code
+- `to_jwt_qr_code`: Compressed JWT in base45 as a QR code
+- `pipeline`: A procedure that allows chaining several procedures
+- `from_hcert`: Decode an HCERT and verify the signature
+
+### Public Key API
+
+The public key is exposed at the `/.well-known/jwks.json` endpoint.
+It uses the [JWKS](https://datatracker.ietf.org/doc/html/rfc7517) format to expose the public key.
+
+## Running the Signer
+
+The simplest way to run the signer is to use the Docker image.
+
+```bash
+  docker build -t signer .
+  docker run -p 3000:3000 signer
+```
+
+By default, the signer will listen on port 3000.
+It boots using the `config.ru` file and uses an example key pair to sign the EVC.
+You **must** use your own `config.ru` file to configure the signer with your own key pair.
+The signer uses a basic interface for key pair storage that allows you to implement your own key store.
+
+## Usage

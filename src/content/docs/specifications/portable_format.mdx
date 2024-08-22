@@ -1,0 +1,40 @@
+---
+title: Portable Format
+description: A thechnical specification of the European Vaccination Card (EVC), focused on the portable format.
+---
+import { Badge } from '@astrojs/starlight/components';
+
+**Status:** <Badge text="Draft" variant="caution" size="medium" />
+
+
+In its portable format, the CVE is represented as a CWT (CBOR Web Token), which is a binary-encoded, signed structure.
+The CWT is a CBOR object that contains a set of claims—statements about the subject being identified.
+These claims are encoded in the CWT as a set of name/value pairs, where the names are strings and the values are the corresponding claim values.
+Claim values are described in the [schema section](/specifications/schema).
+
+:::tip
+CWT is the equivalent of JSON Web Tokens (JWT) but uses CBOR instead of JSON.
+While JWT originates from the JOSE (JavaScript Object Signing and Encryption) standard, [CWT](https://www.rfc-editor.org/rfc/rfc8392.txt) comes from the [COSE](https://datatracker.ietf.org/doc/html/rfc8152) (CBOR Object Signing and Encryption) standard.
+:::
+
+Using CBOR instead of JSON allows for a more compact representation of data, which is beneficial for QR code representation.
+Large QR codes with medium redundancy capacity (supporting a loss of 15%) can only represent about 3,000 alphanumeric characters.
+
+The CWT is then compressed using the [zlib](https://datatracker.ietf.org/doc/html/rfc1950) algorithm to reduce the size of the data stored in the QR code.
+
+QR codes can store binary-encoded data, but some readers may have difficulty reading them.
+Therefore, it is better to use alphanumeric encoding, which is more robust and increases interoperability.
+To convert the binary data to alphanumeric data, we use Base45 encoding, a binary-to-text encoding scheme that uses a set of 45 printable ASCII characters to represent binary data. 
+[Base45](https://datatracker.ietf.org/doc/html/rfc9285) appears to be the most compact encoding suitable for use with QR codes.
+
+import { Steps } from '@astrojs/starlight/components';
+
+<Steps>
+
+1. The **CVE** is converted to CBOR and signed as a **CWT**.
+2. The **CWT** is compressed using the **zlib** algorithm.
+3. The compressed **CWT** is encoded in **Base45**.
+4. The **Base45** encoded data is stored in a **QR code**.
+5. The **QR code** can be printed on a PDF.
+
+</Steps>
