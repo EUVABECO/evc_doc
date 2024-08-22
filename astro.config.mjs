@@ -7,7 +7,7 @@ export default defineConfig({
 	base: 'evc_doc',
 	integrations: [
 		starlight({
-			title: 'My Docs',
+			title: 'EVC Docs',
 			social: {
 				rss:'https://euvabeco.eu/news/',
 			},
