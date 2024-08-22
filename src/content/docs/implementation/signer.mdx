@@ -72,4 +72,47 @@ It boots using the `config.ru` file and uses an example key pair to sign the EVC
 You **must** use your own `config.ru` file to configure the signer with your own key pair.
 The signer uses a basic interface for key pair storage that allows you to implement your own key store.
 
-## Usage
+## Usage Examples
+
+All examples are based on the JSON-RPC API. To reproduce these examples, you'll need the `curl` and `jq` command-line tools.
+
+### Sign and Generate a QR Code (PNG)
+
+In this example, we call the `to_hcert_qr_code` procedure.
+
+First, create a file named `to_hcert_qr_code_png.json` with the following content:
+
+```json
+{
+  "jsonrpc": "2.0",
+  "id": "1234",
+  "method": "to_hcert_qr_code",
+  "params": {
+    "file_format": "png",
+    "hcert_data": {
+      "ver": "1.0.0",
+      "nam": {
+        "fnt": "Jean",
+        "gnt": "Michel"
+      },
+      "dob": "1978-01-01",
+      "v": []
+    }
+  }
+}
+```
+
+Then, run the following command:
+
+```bash
+curl -X POST localhost:3000/jsonrpc -d @./to_hcert_qr_code_png.json | jq -r .result | base64 -D > test.png
+```
+
+You should now have a `test.png` file in your current directory.
+
+Some explanations:
+- All procedures are called with a POST request to the `/jsonrpc` endpoint.
+- The procedure name is specified in the `method` field of the request body.
+- The parameters are provided in the `params` field of the request body.
+- The result is in the `result` field of the response (`jq -r .result`).
+- All binary results are base64 encoded, so we use `base64 -D` to decode them.
