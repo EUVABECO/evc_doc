@@ -1,6 +1,6 @@
 ---
 title: Schema
-description: A thechnical specification of the European Vaccination Card (EVC), focused on schema.
+description: A technical specification of the European Vaccination Card (EVC), focused on schema.
 ---
 import { Badge } from '@astrojs/starlight/components';
 
@@ -45,9 +45,12 @@ It is derived from the European Digital COVID Certificate (DCC) [specification](
           "items": {
             "type": "object",
             "properties": {
-              "o": {
+              "reg": {
                 "type": "string"
               },
+              "rep": {
+                "type": "integer"
+              },			  
               "i": {
                 "type": "integer"
               },
@@ -58,7 +61,7 @@ It is derived from the European Digital COVID Certificate (DCC) [specification](
                 "type": "integer"
               }
             },
-            "required": ["o", "i", "a", "mp"]
+            "required": ["reg", "rep", "i", "a", "mp"]
           }
         }
       },
@@ -102,13 +105,13 @@ It is derived from the European Digital COVID Certificate (DCC) [specification](
     },
     "dob": "2020-10-06",
     "v": [
-      {"o": "LUX","i": 9432,"a": 45,"mp": 514},
-      {"o": "LUX","i": 6260,"a": 75,"mp": 514},
-      {"o": "LUX","i": 9070,"a": 90,"mp": 14},
-      {"o": "LUX","i": 1723,"a": 149,"mp": 510},
-      {"o": "LUX","i": 88,"a": 164,"mp": 123},
-      {"o": "LUX","i": 1115,"a": 331,"mp": 510},
-      {"o": "LUX","i": 6428,"a": 359,"mp": 123}
+      {"reg":"LUX","rep":1,"i": 9432,"a": 45,"mp": 514},
+      {"reg":"LUX","rep":1,"i": 6260,"a": 75,"mp": 514},
+      {"reg":"LUX","rep":1,"i": 9070,"a": 90,"mp": 14},
+      {"reg":"LUX","rep":1,"i": 1723,"a": 149,"mp": 510},
+      {"reg":"LUX","rep":1,"i": 88,"a": 164,"mp": 123},
+      {"reg":"LUX","rep":1,"i": 1115,"a": 331,"mp": 510},
+      {"reg":"LUX","rep":1,"i": 6428,"a": 359,"mp": 123}
     ]
   }
 }
