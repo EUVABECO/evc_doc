@@ -40,6 +40,15 @@ It is derived from the European Digital COVID Certificate (DCC) [specification](
           "type": "string",
           "format": "date"
         },
+		"pid": {
+		  "oid": {
+		    "type": "string"
+		  },
+		  "id": {
+		    "type": "string"
+		  },
+		  "required": ["oid","id"]
+		},
         "v": {
           "type": "array",
           "items": {
@@ -78,10 +87,13 @@ It is derived from the European Digital COVID Certificate (DCC) [specification](
 | Field     | Type   | Example     | Comment                                         |
 | --------- | ------ | ----------- | ----------------------------------------------- |
 | **ver**   | string | 1.0.0       | Version of the structure                        |
-| **nam**   | string | DOE         | Basic identity traits                           |
+| **nam**   | struct |             | Basic identity traits                           |
 | **fnt**   | string | DOE         | Name                                            |
 | **gnt**   | string | John        | First or usual given name                       |
 | **dob**   | date   | 2017-07-19  | Date of birth                                   |
+| **pid**   | struct |             | Optional person identifier                      |
+| **oid**   | string | 1.2.250.1.213.1.4.8 | [OID](/specifications/oid) for the identification scheme       |
+| **id**    | string | 1630777186051 | Person identifier within the scheme           |
 | **v**     | array  |             | Vaccine administration records                  |
 | **reg**   | string | FRA         | 3 letters code for a registry                   |
 | **rep**   | int    | 5           | Index for a repository in a registry            |
