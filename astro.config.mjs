@@ -24,6 +24,10 @@ export default defineConfig({
 					label: 'Implementation',
 					autogenerate: { directory: 'implementation' },
 				},
+				{
+					label: 'Detailed specification',
+					autogenerate: { directory: 'detailed%20specification' },
+				},				
 			],
 			defaultLocale: 'root',
 			locales: {
